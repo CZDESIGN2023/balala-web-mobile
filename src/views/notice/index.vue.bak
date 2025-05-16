@@ -1,0 +1,608 @@
+<script setup lang="ts">
+import { computed, nextTick, onMounted, reactive, ref } from 'vue'
+import { useIntersectionObserver } from '@vueuse/core'
+import { debounce } from 'lodash'
+import noticeTpl from './components/noticeTpl.vue'
+import type { CommentList, TabType } from './types'
+import { myPendingWork, notifyCount, relatedCommentByIds, relatedCommentIds } from '@/api/user'
+import { getTableByid } from '@/mixins/vtable'
+import type { TableTaskItem } from '@/api/interface'
+import { useNoticeStore } from '@/stores/modules/notice'
+import { useUserStore } from '@/stores/modules/user'
+import NotificationTemplate from '@/socket/notification'
+import type { NotificationData } from '@/socket/notification/type'
+import { useProjectStore } from '@/stores/modules/project'
+
+const emits = defineEmits(['onClose'])
+const projectStore = useProjectStore()
+const isCollapse = computed(() => projectStore.isCollapse)
+
+const useNotice = useNoticeStore()
+const toDoTotal = ref<number>(0)
+const { userInfo } = useUserStore()
+const toDoIndex = computed(() => useNotice.userNoticeCounts[userInfo.id]?.todoIndex || 0)
+const commentIndex = computed(() => useNotice.userNoticeCounts[userInfo.id]?.commentIndex || 0)
+const sysIndex = computed(() => useNotice.userNoticeCounts[userInfo.id]?.sysIndex || 0)
+
+const state = reactive({
+  isListEmpty: false,
+  isRequest: false,
+})
+
+const selItems = ref([
+  { id: 1, text: '待办' },
+  { id: 2, text: '评论' },
+  { id: 3, text: '系统' },
+] as TabType[])
+
+// 设置多个模块ref
+const visibleListRef = ref()
+const refList: any = ref<any[]>([])
+
+onMounted(() => {
+  getNotifyCount()
+  getRemainList()
+})
+
+const loadIndex = ref<number>(0)
+
+const activeKey = ref(0)
+// 展示的列表
+const dataArr = ref<TableTaskItem[] | string[]>([])
+// 所有id列表
+const allDataIdArr = ref([])
+// 获取 待办 列表数据
+async function getRemainList() {
+  try {
+    state.isRequest = true
+    const response = await myPendingWork()
+    const { items = [] } = response.data
+    allDataIdArr.value = items
+    dataArr.value = items
+    state.isListEmpty = !items.length
+
+    if (typeof enListeningVisible === 'function')
+      nextTick(enListeningVisible)
+  }
+  catch (error) {
+    state.isRequest = false
+    state.isListEmpty = true
+  }
+}
+
+// 获取 评论 列表数据
+async function getCommentList() {
+  try {
+    state.isRequest = true
+    const response = await relatedCommentIds()
+    const { items = [] } = response.data
+    allDataIdArr.value = items
+    dataArr.value = items
+    state.isListEmpty = !items.length
+    refList.value = []
+
+    if (typeof enListeningVisible === 'function')
+      nextTick(enListeningVisible)
+  }
+  catch (error) {
+    state.isRequest = false
+    state.isListEmpty = true
+  }
+}
+
+// 评论详情列表
+async function getCommentInfo(ids: string[]) {
+  const { data } = await relatedCommentByIds(ids)
+  if (!data?.items?.length)
+    return
+
+  data?.items.forEach((item: CommentList) => {
+    const infoIndex = dataArr.value.findIndex((id: string | TableTaskItem) => id === item.id)
+    if (infoIndex === -1)
+      return
+    const info = JSON.parse(item.doc)
+    const suffix = info.relation.includes('COMMENT_AT') ? ' 中@了你' : ' 中发布评论'
+    dataArr.value[infoIndex] = {
+      key: item.id,
+      ...info.notification,
+      suffix,
+      spaceId: info.space.spaceId,
+    }
+  })
+  state.isRequest = false
+}
+
+// 根据id（数组）获取详情列表
+const getIdList = debounce(() => {
+  const length = (dataArr.value as any[]).filter((find: any) => find?.id)?.length || 0
+  const ids = allDataIdArr.value?.slice(length, loadIndex.value)
+  if (!ids?.length)
+    return
+  if (activeKey.value === 0)
+    getItemList(ids)
+  else if (activeKey.value === 1)
+    getCommentInfo(ids)
+}, 300)
+
+// 待办详情列表
+async function getItemList(ids: string[]) {
+  const list = await getTableByid(ids, '')
+  if (!list?.length)
+    return
+
+  list.forEach((item: any) => {
+    const infoIndex = dataArr.value.findIndex((id: string | TableTaskItem) => id === item.id)
+    if (infoIndex === -1)
+      return
+    dataArr.value[infoIndex] = item
+  })
+  state.isRequest = false
+}
+
+// 监听元素是否可见
+function enListeningVisible(minItemsToLoad: number = 2) {
+  const list = visibleListRef.value && visibleListRef.value.querySelectorAll('.visible-item')
+  setTimeout(() => {
+    if (!list?.length)
+      return
+
+    let itemsLoaded = 0 // 已加载的项数
+    list?.forEach((item: any) => {
+      useIntersectionObserver(item, ([{ isIntersecting }]) => {
+        if (isIntersecting) {
+          loadIndex.value++
+          itemsLoaded++
+          getIdList()
+        }
+      })
+    })
+    // 如果已加载的项数小于保底加载的数量，则手动触发加载
+    if (itemsLoaded < minItemsToLoad) {
+      for (let i = itemsLoaded; i < minItemsToLoad; i++) {
+        loadIndex.value++
+        getIdList()
+      }
+    }
+  }, 200)
+}
+// 获取 待办 通知计数
+async function getNotifyCount() {
+  const { data } = await notifyCount()
+  toDoTotal.value = data?.pending || 0
+}
+
+// 切换tab页
+const preIndex = ref(0)
+function selClick(index: number) {
+  refList.value = []
+  preIndex.value = activeKey.value
+  activeKey.value = index
+  if (index === 2) {
+    const list: NotificationData[] = useNotice.getMessagesForUser(userInfo.id)
+    state.isRequest = false
+    state.isListEmpty = !list.length
+    dataArr.value = handleNotice(list)
+    useNotice.setUserNoticeCounts(0, 'system')
+  }
+  else if (index === 1) {
+    getCommentList()
+    useNotice.setUserNoticeCounts(0, 'comment')
+  }
+  else if (index === 0) {
+    getRemainList()
+    getNotifyCount()
+    useNotice.setUserNoticeCounts(0, 'todo')
+  }
+}
+
+// 处理通知数据
+function handleNotice(list: NotificationData[]) {
+  const newList: any = []
+  if (!list?.length) {
+    dataArr.value = []
+    return
+  }
+  state.isListEmpty = false
+  list.forEach((item: any, index: number) => {
+    const notificationTemplate = new NotificationTemplate(item)
+    const notification = notificationTemplate.renderNotification()
+    newList[index] = notification
+  })
+  return newList
+}
+
+const noticeList = computed(() => {
+  const list: NotificationData[] = useNotice.getMessagesForUser(userInfo.id)
+  return handleNotice(list)
+})
+
+const listData = computed(() => {
+  if ([0, 1].includes(activeKey.value))
+    return dataArr.value
+
+  return noticeList.value
+})
+
+const showCleanTips = ref<boolean>(false)
+
+// 清除数据
+function cleanData() {
+  dataArr.value = []
+  allDataIdArr.value = []
+  loadIndex.value = 0
+}
+
+function closeClick() {
+  cleanData()
+  emits('onClose')
+}
+
+function onCleanNotice() {
+  // useNotice.clearNoticeList()
+  useNotice.clearMessagesForUser(userInfo.id)
+  showCleanTips.value = false
+  state.isListEmpty = true
+  cleanData()
+}
+
+// 获取未读数
+function getCount(tabId: number) {
+  switch (tabId) {
+    case 1:
+      return Number(toDoTotal.value) || ''
+    case 2:
+      return Number(commentIndex.value) || ''
+
+    default:
+      return ''
+  }
+}
+const skeletonCount = computed(() => {
+  return Math.max(4 - listData.value.length, 0) // 至少渲染4个骨架屏
+})
+
+// 是否显示红点
+const isShowIcon = computed(() => {
+  return (item: TabType) => {
+    switch (item.id) {
+      case 1: // 待办
+        return toDoIndex.value > 0 && toDoTotal.value > 0
+      case 2: // 评论
+        return commentIndex.value > 0
+      case 3: // 系统
+        if (sysIndex.value > 0) {
+          if (activeKey.value === 2 && useNotice.showNotice) {
+            useNotice.setUserNoticeCounts(0, 'system')
+            return false
+          }
+          else {
+            return true
+          }
+        }
+    }
+  }
+})
+</script>
+
+<template>
+  <div class="notce_con" :class="isCollapse ? 'collapse-notice' : 'expand-notice'">
+    <!-- 切换栏 -->
+    <div class="hd">
+      <div class="hd_con">
+        <a-tabs v-model:activeKey="activeKey" @tab-click="selClick">
+          <a-tab-pane v-for="(item, index) in selItems" :key="index">
+            <template #tab>
+              <div class="item flex-row-start text14" :class="{ redIco: isShowIcon(item) }">
+                {{ item.text }}
+                <p v-if="item.id !== 3 && getCount(item.id)" class="text13 main-color ml4">
+                  {{ getCount(item.id) }}
+                </p>
+              </div>
+            </template>
+          </a-tab-pane>
+        </a-tabs>
+        <div class="line" />
+      </div>
+
+      <div class="flex-row-center">
+        <!-- 清理 -->
+        <a-popover
+          v-if="activeKey === 2 && listData?.length"
+          v-model:open="showCleanTips"
+          trigger="click"
+          placement="bottomLeft"
+        >
+          <template #content>
+            <div class="clean-title mb24 mt12 text16 pfm ml12 mr4">
+              确认一键已读【所有消息】？
+            </div>
+            <div class="flex-row-end mb12 mr12">
+              <a-button class="mr12" @click="showCleanTips = false">
+                取消
+              </a-button>
+              <a-button type="primary" @click="onCleanNotice">
+                确认
+              </a-button>
+            </div>
+          </template>
+
+          <a-tooltip title="一键已读">
+            <div class="clean-icon icon-hover flex-row-center pointer">
+              <svg-icon name="clean-all" size="24" color="#666" />
+            </div>
+          </a-tooltip>
+        </a-popover>
+
+        <div
+          v-else-if="activeKey === 2 && !listData?.length"
+          class="clean-icon flex-row-center no-drop"
+          @click="showCleanTips = true"
+        >
+          <svg-icon name="clean-all" size="24" color="#D8D8D8" />
+        </div>
+
+        <!-- 关闭 -->
+        <svg-icon
+          class="closeIco icon-hover ml8"
+          name="close"
+          size="24"
+          color="#999999"
+          @click="closeClick"
+        />
+      </div>
+    </div>
+
+    <!-- 内容 -->
+    <div v-if="state.isListEmpty" class="mt235 text-center">
+      <img class="w72 h72" src="@/assets/icon/no-data-search.png" alt="">
+      <div class="none">
+        暂无通知
+      </div>
+    </div>
+    <div v-else id="visible-list" ref="visibleListRef" class="typ1">
+      <el-scrollbar height="637px">
+        <div
+          v-for="(item, index) in listData"
+          :key="item.id ? item.id : item"
+          class="visible-item"
+        >
+          <noticeTpl
+            :index="index"
+            :item="item"
+            :tab-index="activeKey"
+            :loading="typeof item === 'string' || state.isRequest"
+          />
+        </div>
+        <div v-if="listData.length" class="temp-skelton">
+          <a-skeleton v-for="(item, index) in skeletonCount" :key="index" :paragraph="false" :loading="state.isRequest" />
+        </div>
+      </el-scrollbar>
+    </div>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+.visible-item:hover {
+  background: $tool-hover-bg;
+  border-radius: 4px;
+  :deep(.tpl_item) {
+    border-bottom: 1px solid transparent !important;
+  }
+}
+.visible-item {
+  margin: 0 12px 12px;
+  &:first-of-type {
+    margin-top: 8px;
+    :deep(.tpl_item) {
+      margin-top: 0;
+    }
+  }
+  &:last-of-type {
+    margin-bottom: 0;
+    :deep(.tpl_item) {
+      border-bottom: 1px solid transparent !important;
+    }
+  }
+}
+.notce_con {
+  width: 362px;
+  height: 711px;
+  border-radius: 8px;
+  padding: 0px 0px 16px 0px;
+  background: #ffffff;
+  z-index: 999;
+  box-shadow: $tool-drop-box-shadow2;
+  border: 1px solid $tool-drop-box-border;
+  .hd {
+    height: 48px;
+    line-height: 48px;
+    padding: 0 12px 0 24px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    .line {
+      width: 100%;
+      height: 1px;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      background: #f2f3f5;
+    }
+    .hd_con {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      :deep(.ant-tabs-nav) {
+        margin: 0;
+        &::before {
+          border: 0;
+        }
+        .ant-tabs-tab {
+          margin-left: 24px;
+          &:first-of-type {
+            margin-left: 0;
+          }
+        }
+        .ant-tabs-tab-active {
+          .item {
+            font-family: 'CustomFont-Medium';
+            // font-weight: 500;
+            color: #1d74f5;
+          }
+        }
+        .ant-tabs-nav-wrap {
+          overflow: visible;
+        }
+        .ant-tabs-nav-operations {
+          display: none;
+        }
+      }
+      .item {
+        color: #333333;
+        font-size: 14px;
+        font-weight: 500;
+        position: relative;
+        cursor: pointer;
+        span {
+          font-size: 13px;
+          font-weight: initial;
+        }
+      }
+
+      .cur {
+        position: relative;
+        .item-text {
+          color: #1d74f5;
+          font-family: 'CustomFont-Medium';
+          // font-weight: 500;
+        }
+      }
+      .cur-line {
+        width: 100%;
+        border-bottom: 2px solid #1d74f5;
+        line-height: 44px;
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+      }
+      .redIco::after {
+        content: '';
+        width: 8px;
+        height: 8px;
+        border-radius: 100px;
+        background-color: #fd4c4c;
+        position: absolute;
+        right: -5px;
+        top: -2px;
+      }
+    }
+    .closeIco {
+      cursor: pointer;
+    }
+
+    :deep() {
+      .ant-popover .ant-popover-inner {
+        padding: 24px 14px 24px 24px;
+      }
+    }
+
+    .clean-title {
+      color: #1a1a1a;
+    }
+  }
+  .noticeLis {
+    height: 660px;
+    overflow-y: auto;
+  }
+  .el-scrollbar {
+    height: 100% !important;
+  }
+}
+
+.expand-notice {
+  position: fixed;
+  left: 246px;
+  top: 94px;
+}
+
+.collapse-notice {
+  position: fixed;
+  left: 66px;
+  top: 132px;
+}
+
+.clean-icon {
+  width: 24px;
+  height: 24px;
+}
+.icon-hover {
+  background: #fff;
+}
+.icon-hover:hover {
+  border-radius: 4px;
+  background: $tool-hover-bg !important;
+}
+
+.no-drop {
+  cursor: no-drop;
+}
+
+.none {
+  font-size: 14px;
+  color: #999999;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.slide-rigth-enter-active,
+.slide-rigth-leave-active {
+  transition: transform 0.2s;
+  opacity: 0;
+}
+
+.slide-left-enter-active,
+.slide-left-leave-active {
+  transition: transform 0.1s;
+  opacity: 0;
+}
+
+.slide-left-enter,
+.slide-left-leave-to {
+  transform: translateX(-100%);
+  opacity: 1;
+}
+
+.slide-right-enter,
+.slide-right-leave-to {
+  transform: translateX(100%);
+  opacity: 1;
+}
+</style>
+
+<style lang="scss">
+.notce_con {
+  .typ1 {
+    .ant-skeleton-content {
+      padding: 0;
+      .ant-skeleton-title {
+        background-color: #f9fafc !important;
+        width: 336px !important;
+        height: 146px !important;
+        margin: 0 auto;
+      }
+    }
+  }
+  .temp-skelton {
+    .ant-skeleton-content {
+      .ant-skeleton-title {
+        margin: 0 auto 12px;
+      }
+    }
+  }
+}
+</style>

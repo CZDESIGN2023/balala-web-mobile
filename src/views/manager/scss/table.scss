@@ -1,0 +1,142 @@
+.project-lis {
+  :deep(.vxe-table) {
+    .vxe-table--render-wrapper {
+      .vxe-table--main-wrapper,
+      .vxe-table--fixed-wrapper {
+        .vxe-table--header-wrapper {
+          background-color: transparent;
+          .vxe-table--header-border-line {
+            border-bottom: 0;
+            background-image: linear-gradient(#f2f3f5, #f2f3f5), linear-gradient(#f2f3f5, #f2f3f5);
+          }
+
+          .vxe-header--row {
+            .vxe-header--column {
+              padding: 0px 0;
+              height: 44px;
+              background-image: linear-gradient(#f2f3f5, #f2f3f5), linear-gradient(#f2f3f5, #f2f3f5);
+              &:last-child {
+                background-image: linear-gradient(transparent, transparent),
+                  linear-gradient(#f2f3f5, #f2f3f5);
+              }
+              &:hover {
+                background-color: #f5f5f5;
+              }
+            }
+
+            // 表头二级的最后一个补边框
+            &:last-child {
+              .vxe-header--column {
+                // &:last-child {
+                //   background-image: linear-gradient(#f2f3f5, #f2f3f5),
+                //     linear-gradient(#f2f3f5, #f2f3f5);
+                // }
+              }
+            }
+          }
+          .vxe-cell--title {
+            font-size: 13px;
+            // color: $color-title;
+          }
+        }
+        .vxe-table--body-wrapper {
+          table {
+            overflow: hidden;
+            border-radius: 0 0 8px 8px;
+          }
+          .vxe-body--row {
+            &:last-child {
+              .vxe-body--column {
+                &:last-child {
+                  background-image: none;
+                }
+              }
+            }
+            &.row--hover {
+              background: $color-bg-hover;
+            }
+            &.row--current {
+              background: $color-bg-hover;
+            }
+            .vxe-body--column {
+              .vxe-tree--btn-wrapper {
+                opacity: 0;
+                pointer-events: none;
+              }
+            }
+            &.table-checked {
+              .vxe-body--column {
+                background-color: rgba(29, 116, 245, 0.08);
+                background-image: linear-gradient(#e8e9eb, #e8e9eb),
+                  linear-gradient(#e8e9eb, #e8e9eb);
+              }
+              &.row--hover {
+                background: none;
+              }
+            }
+          }
+          .vxe-body--column {
+            height: 44px;
+            background-image: linear-gradient(#f2f3f5, #f2f3f5), linear-gradient(#f2f3f5, #f2f3f5);
+            .grey-time {
+              color: #999999 !important;
+              cursor: not-allowed;
+              -webkit-text-fill-color: #999999 !important;
+            }
+
+            .yellow-time {
+              color: #ff9800;
+            }
+
+            .red-time {
+              color: #e43535;
+            }
+            &:last-child {
+              background-image: linear-gradient(transparent, transparent),
+                linear-gradient(#f2f3f5, #f2f3f5);
+            }
+            // .vxe-cell {
+            //   padding: 0;
+            // }
+            .vxe-cell--tree-node {
+              padding: 0 !important;
+            }
+            .vxe-tree-cell {
+              padding: 0;
+            }
+          }
+
+          .vxe-header--column:not(.col--ellipsis) {
+            padding: 0px 0;
+          }
+          &::-webkit-scrollbar {
+            // 整体样式
+            background-color: transparent;
+            width: 0px;
+            height: 0px;
+            border: 0px solid transparent !important;
+          }
+        }
+      }
+      .vxe-table--fixed-wrapper {
+        .vxe-table--header-wrapper {
+          background-color: #fff;
+        }
+        .vxe-table--body-wrapper {
+          background-color: #fff;
+        }
+        .vxe-table--fixed-left-wrapper,
+        .vxe-table--fixed-right-wrapper {
+          z-index: 99;
+        }
+      }
+    }
+
+    .vxe-table--border-line {
+      border: 1px solid #f2f3f5;
+      // border-radius: 8px;
+      z-index: 100;
+      border-radius: 8px 8px 0 0;
+    }
+  }
+}

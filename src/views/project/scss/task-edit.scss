@@ -1,0 +1,328 @@
+@import '@/styles/_base';
+.task-edit-drawer {
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden !important;
+  &:focus {
+    outline: 0;
+  }
+  .navbar {
+    .content {
+      padding: 0 8px;
+    }
+  }
+  .tips-svg {
+    cursor: pointer;
+    height: 16px;
+    position: absolute;
+    right: -18px;
+    top: 10px;
+    pointer-events: auto;
+    &:hover {
+      .svg-icon {
+        use {
+          fill: #000;
+        }
+      }
+    }
+  }
+  .ant-drawer-wrapper-body {
+    position: relative;
+    .ant-drawer-header {
+      width: 100%;
+      height: 44px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 0;
+      border-bottom: 0;
+      z-index: 100;
+      .ant-drawer-header-title {
+        width: 100%;
+        height: 100%;
+        .ant-drawer-title {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+    .ant-drawer-body {
+      padding: 0;
+      padding-top: 44px;
+    }
+    .ant-drawer-footer {
+      width: 100%;
+      position: sticky;
+      bottom: 0;
+      right: 0;
+      background: #fff;
+      z-index: 100;
+      padding: 0;
+      border: 0;
+    }
+  }
+  .drawer-header {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-bottom: 1px solid $color-input-hover;
+    padding: 0 24px 0 16px;
+    .close {
+      width: 32px;
+      height: 32px;
+      border: 1px solid $color-border-main;
+      border-radius: 6px;
+      &:hover {
+        background: rgba(0, 0, 0, 0.04);
+      }
+    }
+  }
+  .task-node-flow {
+    position: relative;
+    background: $color-input;
+    .node-flow-box {
+      height: 128px;
+      // padding: 0 16px;
+      &:hover {
+        .ps__rail-x {
+          opacity: 1;
+        }
+      }
+    }
+    .node-info {
+      padding: 0 16px;
+      .node-info-wrap {
+        width: 100%;
+        height: 64px;
+        border-radius: 8px;
+        padding: 12px 16px;
+        background: #ffffff;
+        .label {
+          font-size: 14px;
+          color: $color-title;
+          position: relative;
+        }
+        .must {
+          &::after {
+            content: '*';
+            color: #ff4d4f;
+            position: absolute;
+            right: -12px;
+            top: -1px;
+          }
+        }
+        .node-director-box {
+          margin-left: 20px;
+          min-width: 152px;
+          height: 40px;
+        }
+        .node-reminder {
+          background: #ffffff;
+          border: 1px solid $color-border-main;
+          position: relative;
+          .m-circle {
+            width: 32px;
+            height: 32px;
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            opacity: 0;
+            // border: 1px solid #fff;
+            .rate-circle {
+              width: 32px;
+              height: 32px;
+              transform: rotate(-90deg);
+              circle {
+                cx: 16px;
+                cy: 16px;
+                r: 15px;
+                stroke-linecap: round;
+                fill: none;
+                stroke-width: 1px;
+              }
+              .dasharray {
+                transition: stroke-dasharray 0.4s linear;
+              }
+            }
+          }
+          &.disabled {
+            .m-circle {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+  }
+  .task-tab {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 40px;
+    background: #fff;
+    z-index: 12;
+    .ant-tabs {
+      height: 100%;
+    }
+    .ant-tabs-nav {
+      height: 100%;
+      &::before {
+        border-bottom: 1px solid $color-border-minor;
+      }
+      .ant-tabs-tab {
+        padding: 13px 0;
+        line-height: 14px;
+        .ant-tabs-tab-btn {
+          font-size: 14px;
+        }
+      }
+      .ant-tabs-tab + .ant-tabs-tab {
+        margin: 0 0 0 24px;
+        .num {
+          color: $color-main;
+          &.unread {
+            border-radius: 8px;
+            padding: 2px 5px;
+            height: 16px;
+            background: #fd4c4c;
+            font-size: 12px;
+            color: #fff;
+          }
+        }
+        &:hover {
+          color: $color-primary;
+          .svg-icon {
+            use {
+              fill: $color-primary;
+            }
+          }
+        }
+      }
+      .ant-tabs-tab-active {
+        & + .ant-tabs-tab {
+          .num {
+            color: $color-minor;
+          }
+        }
+        // p {
+        //   @extend .pfm;
+        //   @extend .font-smoothing;
+        // }
+        .ant-tabs-tab-btn,
+        p {
+          @extend .pfm;
+          @extend .font-smoothing;
+          color: $color-primary;
+        }
+        .svg-icon {
+          use {
+            fill: $color-primary;
+          }
+          &:hover {
+            border-radius: 4px;
+            background: $color-bg-hover;
+          }
+        }
+      }
+      .ant-tabs-nav-wrap {
+        padding-left: 16px;
+      }
+      .ant-tabs-ink-bar {
+        bottom: 1px;
+        background: $color-primary;
+      }
+    }
+  }
+  .task-form {
+    padding: 24px 0px;
+    padding-top: 16px;
+    padding-bottom: 0;
+    .module {
+      padding: 0 24px;
+
+      .creator-box {
+        cursor: not-allowed;
+        background: none;
+      }
+    }
+    .base-module {
+      padding-bottom: 8px;
+      border-bottom: 1px solid $color-border-minor;
+    }
+    .other-module {
+      padding-top: 24px;
+    }
+  }
+}
+
+.short-name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 180px;
+  white-space: nowrap;
+}
+
+.commnet-box {
+  width: 100%;
+  padding: 10px 0;
+  .readonly-mode {
+    background: $color-input;
+    &:hover {
+      background: $color-input-hover;
+    }
+  }
+  .default-mode {
+    width: 100%;
+    .input {
+      background: $color-input;
+      &:hover {
+        background: $color-input-hover;
+      }
+    }
+  }
+}
+
+.gotop {
+  position: absolute;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(24, 62, 118, 0.16);
+  box-shadow:
+    0px 8px 24px 0px rgba(0, 0, 0, 0.06),
+    0px 4px 4px 0px rgba(0, 0, 0, 0.02);
+  right: 24px;
+  top: -64px;
+  transition: all 0.4s;
+  &:hover {
+    background: rgba(41, 66, 102, 0.32);
+    box-shadow:
+      0px 8px 24px 0px rgba(0, 0, 0, 0.06),
+      0px 4px 4px 0px rgba(0, 0, 0, 0.02);
+  }
+}
+
+.comment-reload-box {
+  top: 64px;
+  right: 24px;
+  position: absolute;
+  height: 29px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid $tool-drop-box-border;
+  cursor: pointer;
+  box-shadow: $tool-drop-box-shadow;
+  &:hover {
+    .svg-icon {
+      use {
+        fill: #666666;
+      }
+    }
+  }
+}

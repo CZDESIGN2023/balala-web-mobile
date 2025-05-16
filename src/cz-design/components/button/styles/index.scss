@@ -1,0 +1,104 @@
+@mixin button-size($height, $font-size, $padding) {
+  height: $height;
+  font-size: $font-size;
+  padding: 0 $padding;
+}
+
+@mixin button-colors($bg, $hover-bg, $active-bg, $disabled-bg, $text-color, $disabled-text-color) {
+  background-color: $bg;
+  color: $text-color;
+  &:hover {
+    background-color: $hover-bg;
+  }
+  &:active {
+    background-color: $active-bg;
+  }
+  &:disabled {
+    background-color: $disabled-bg;
+    color: $disabled-text-color;
+  }
+}
+
+.cz-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  letter-spacing: 0em;
+  border-radius: 4px;
+  color: #fff;
+
+  &__large {
+    @include button-size(40px, 16px, 16px);
+    border-radius: 6px;
+  }
+  &__normal {
+    @include button-size(32px, 14px, 12px);
+  }
+  &__small {
+    @include button-size(26px, 12px, 8px);
+  }
+  &__default {
+    @include button-colors(#f7f8fa, #f2f3f5, #edeef0, #f2f3f5, #1a1a1a, #bfbfbf);
+  }
+  &__primary {
+    @include button-colors(#1d74f5, #0f87ff, #2361e2, #8dcbff, #fff, #fff);
+  }
+  &__success {
+    @include button-colors(#08c479, #56cf91, #00b961, #8edcb1, #fff, #fff);
+  }
+  &__warning {
+    @include button-colors(#ff9800, #ffa723, #fb8c00, #ffcc7f, #fff, #fff);
+  }
+  &__danger {
+    @include button-colors(#fd4c4c, #f27071, #ff372e, #f89999, #fff, #fff);
+  }
+  &__text {
+    @include button-colors(
+      transparent,
+      rgba(24, 62, 118, 0.03),
+      rgba(24, 62, 118, 0.06),
+      transparent,
+      #1a1a1a,
+      #bfbfbf
+    );
+  }
+  &__link {
+    @include button-colors(transparent, transparent, transparent, transparent, #1d74f5, #8dcbff);
+    &:hover {
+      color: #0f87ff;
+    }
+    &:active {
+      color: #2361e2;
+    }
+    &.is-disabled {
+      color: #8dcbff;
+    }
+  }
+  &.is-plain {
+    background: #fff;
+    color: #1a1a1a;
+    border: 1px solid #edeef0;
+    &:hover {
+      color: #1d74f5;
+      border: 1px solid #1d74f5;
+    }
+    &:active {
+      color: #2361e2;
+      border: 1px solid #2361e2;
+    }
+    &:disabled {
+      color: #bfbfbf;
+      border: 1px solid #edeef0;
+    }
+  }
+  &.is-disabled {
+    cursor: not-allowed;
+  }
+  &.is-round {
+    border-radius: 20px;
+  }
+  &.is-ciecle {
+    border-radius: 50%;
+  }
+}

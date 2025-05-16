@@ -1,0 +1,6 @@
+{
+    "adminUrl":"http://127.0.0.1:18000/",
+    "socketUrl":"ws://127.0.0.1:18000/ws/chat-json",
+    "title":"balala后台管理系统"
+
+}

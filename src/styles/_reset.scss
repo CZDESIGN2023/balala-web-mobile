@@ -1,0 +1,291 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  padding: 0;
+  margin: 0;
+  font-family: 'CustomFont-Regular';
+  letter-spacing: 0.02em;
+  -webkit-font-smoothing: antialiased;
+  font-weight: normal;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: 'CustomFont-Regular';
+  letter-spacing: 0.02em;
+  // font-weight: 400;
+}
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-weight: initial;
+}
+
+img {
+  max-width: 100%;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  background: #fff;
+}
+
+body {
+  line-height: 1;
+  margin: 0 !important;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+a {
+  text-decoration: none;
+  color: #333;
+  font-weight: initial;
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+svg {
+  outline: none;
+}
+
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
+  content: '';
+  content: none;
+}
+
+strong {
+  @extend .pfm;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  -webkit-appearance: button; /* 1 */
+  appearance: none;
+  // background-color: transparent; /* 2 */
+  background-image: none; /* 2 */
+  outline: none !important;
+}
+
+input,
+textarea {
+  caret-color: $color-primary !important;
+}
+
+input:-webkit-autofill {
+  background: transparent;
+  transition: background-color 50000s ease-in-out 0s;
+  -webkit-text-fill-color: unset;
+}
+
+input::placeholder {
+  color: #bfbfbf !important;
+  font-weight: normal !important;
+  font-family: 'CustomFont-Regular';
+  // font-weight: 400;
+}
+
+.ant-select-selection-placeholder {
+  color: #bfbfbf !important;
+}
+
+// input:disabled {
+//   -webkit-text-fill-color: #999999 !important;
+// }
+
+// .b-input-date {
+//   input:disabled {
+//     -webkit-text-fill-color: #999999 !important;
+//   }
+// }
+
+.ant-table-body {
+  &::-webkit-scrollbar {
+    //整体样式
+    background-color: transparent;
+    // display: none;
+    width: 0px;
+    height: 6px;
+    border-left: 0px solid $color-border-main;
+  }
+  &::-webkit-scrollbar-thumb {
+    //滑动滑块条样式
+    border-radius: 2px;
+    background-color: #e2e3e5;
+  }
+  &::-webkit-scrollbar-track {
+    //轨道的样式
+    -webkit-box-shadow: 0;
+    border-radius: 0;
+    background-color: transparent;
+    width: 8px;
+  }
+}
+
+.vxe-table--render-default .vxe-table--body-wrapper {
+  background-color: transparent !important;
+  background: none !important;
+}
+
+.ellipsis-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.break-all {
+  word-break: break-all;
+}
+
+tr td,
+tr th {
+  border: none;
+}
+
+/*
+ * 阻止滚动传递
+ * 1. vxe 表格
+ * 2. element-plus 滚动组件
+ * 3. a-select 组件
+ */
+// .vxe-table--body-wrapper,
+// .el-scrollbar__wrap,
+// .rc-virtual-list-holder,
+.b-data-table .vxe-table--body-wrapper {
+  overscroll-behavior: contain;
+  min-height: min-content !important;
+}
+
+// 屏蔽 edge浏览器密码框 眼睛
+input::-ms-reveal {
+  display: none;
+}
+
+.ant-select-dropdown {
+  border: 1px solid $tool-drop-box-border;
+  box-shadow: $tool-drop-box-shadow;
+}

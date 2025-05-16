@@ -1,0 +1,126 @@
+.pointer {
+  cursor: pointer;
+}
+
+.transition {
+  transition: all 0.2s;
+}
+
+.op {
+  opacity: 0;
+}
+
+.full-100 {
+  width: 100%;
+}
+
+.max-content {
+  width: max-content;
+}
+
+.height-100 {
+  height: 100%;
+}
+
+.full {
+  width: 100%;
+  height: 100%;
+}
+
+.full-auto {
+  width: auto !important;
+}
+
+.font-400 {
+  font-weight: 400;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.flex-inline {
+  display: inline-flex;
+}
+
+// 标题颜色
+.title-color {
+  color: $color-title;
+}
+
+// 图标颜色
+.icon-color {
+  color: $color-icon;
+}
+
+// 主要颜色
+.main-color {
+  color: $color-main;
+}
+
+// 次要颜色
+.minor-color {
+  color: $color-minor;
+}
+
+.text-color3 {
+  color: $color-text3;
+}
+
+// 功能色 红
+.error-color {
+  color: $color-error;
+}
+
+.orange-color {
+  color: $color-orange;
+}
+
+.primary-color {
+  color: $color-primary;
+}
+
+.white-color {
+  color: $color-white;
+}
+
+.input-color {
+  background: $color-input;
+}
+
+.color-blue {
+  color: #1d74f5;
+}
+
+.pfm {
+  font-family: 'CustomFont-Medium' !important;
+  // font-weight: 500;
+}
+
+.pfr {
+  font-family: 'CustomFont-Regular' !important;
+  // font-weight: 400;
+}
+
+.ddin {
+  font-family: 'D-DIN-PRO-500-Medium' !important;
+  font-weight: normal;
+}
+
+.font-smoothing {
+  -webkit-font-smoothing: antialiased;
+}
+
+.pfm-smoothing {
+  font-family: 'CustomFont-Medium' !important;
+  // font-weight: 500;
+  -webkit-font-smoothing: antialiased;
+}
+
+.echarts-slider-handle {
+  border-radius: 4px;
+}
+
+.minor-color-55 {
+  color: rgba(255, 255, 255, 0.55) !important;
+}

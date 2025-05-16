@@ -1,0 +1,147 @@
+.task-add-drawer {
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden !important;
+  &:focus {
+    outline: 0;
+  }
+  .tips-svg {
+    cursor: pointer;
+    height: 16px;
+    position: absolute;
+    right: -18px;
+    top: 10px;
+    pointer-events: auto;
+    &:hover {
+      .svg-icon {
+        use {
+          fill: #000;
+        }
+      }
+    }
+  }
+  .ant-drawer-title {
+    width: 100%;
+  }
+  .ant-drawer-wrapper-body {
+    position: relative;
+    .ant-drawer-header {
+      width: 100%;
+      height: 44px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 0 16px;
+      padding-left: 8px;
+      border-bottom: 0;
+      z-index: 100;
+    }
+    .ant-drawer-body {
+      padding: 0;
+      padding-top: 44px;
+      padding-bottom: 52px;
+    }
+    .ant-drawer-footer {
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background: #fff;
+      z-index: 100;
+      padding: 0;
+      border: 0;
+    }
+  }
+
+  .drawer-header {
+    width: 100%;
+    background: #fff;
+    .close {
+      width: 32px;
+      height: 32px;
+      border: 1px solid $color-border-main;
+      border-radius: 6px;
+      &:hover {
+        background: rgba(0, 0, 0, 0.04);
+      }
+    }
+  }
+  .drawer-footer {
+    width: 100%;
+    height: 52px;
+    background: #fff;
+    border-top: 1px solid $color-border-minor;
+    gap: 12px;
+    .btn {
+      font-size: 14px;
+      border-radius: 4px;
+      padding: 0px 11px;
+    }
+    &.hide {
+      height: 0;
+    }
+  }
+  .task-form {
+    padding-bottom: 0;
+    padding-top: 16px;
+    .module {
+      padding: 0 16px;
+      .priority-form-item {
+        .ant-form-item-label {
+          width: 78px !important;
+        }
+      }
+      .date-form-item {
+        .ant-form-item-label {
+          width: 78px !important;
+        }
+      }
+      .creator-form-item {
+        .ant-form-item-label {
+          width: 58px !important;
+        }
+        .creator-box {
+          cursor: not-allowed;
+        }
+        &.editMode {
+          .ant-form-item-label {
+            width: 78px !important;
+          }
+        }
+      }
+    }
+    .base-module {
+      padding-bottom: 8px;
+    }
+    .other-module {
+      padding-top: 24px;
+    }
+  }
+}
+
+.short-name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 180px;
+  white-space: nowrap;
+}
+
+.commnet-box {
+  width: 100%;
+  padding: 10px 0;
+  .readonly-mode {
+    background: $color-input;
+    &:hover {
+      background: $color-input-hover;
+    }
+  }
+  .default-mode {
+    width: 100%;
+    .input {
+      background: $color-input;
+      &:hover {
+        background: $color-input-hover;
+      }
+    }
+  }
+}

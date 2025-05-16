@@ -1,0 +1,553 @@
+/* 全局样式 */
+
+// 左侧菜单 项目列表 创建项目 popper 弹出层样式
+.popper-add-btn {
+  min-width: auto !important;
+  min-height: 40px;
+  background: #ffffff !important;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 6px !important;
+  box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.07) !important;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  line-height: normal !important;
+  padding: 0 !important;
+}
+
+// 成员添加权限列表样式
+.auth-list {
+  width: 204px;
+  border-radius: 6px;
+  padding: 8px;
+  background: #ffffff;
+  border: 1px solid #e8e9eb;
+  box-shadow:
+    0px 8px 16px 0px rgba(0, 0, 0, 0.08),
+    0px 4px 4px 0px rgba(0, 0, 0, 0.04);
+  border: 1px solid #f7f8fa;
+
+  .row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 4px;
+    &.hide {
+      display: none;
+    }
+    p {
+      font-size: 14px;
+      line-height: 14px;
+      color: $color-icon;
+      margin-bottom: 4px;
+    }
+    span {
+      display: block;
+      font-size: 13px;
+      line-height: 13px;
+      color: $color-minor;
+    }
+    &:hover {
+      background: $color-default-hover;
+    }
+    &:active {
+      background: $color-default-active;
+    }
+    &.active {
+      background: $color-default-active;
+    }
+  }
+}
+
+// 单标题基础头部样式
+.single-title-header {
+  width: 100%;
+  height: 84px;
+  // padding-top: 24px;
+  font-size: 20px;
+  line-height: 20px;
+  font-weight: initial;
+  box-sizing: content-box;
+  color: $color-icon;
+  font-family: 'CustomFont-Medium';
+  -webkit-font-smoothing: antialiased;
+}
+
+// 表格基础样式
+.b-data-table {
+  // max-width: 100%;
+  // border: 1px solid #e5e5e5;
+  border-bottom: 0;
+  position: relative;
+}
+
+// 按钮基础样式
+.b-base-btn {
+  height: 32px !important;
+  border-radius: 4px !important;
+  padding: 0px 15px !important;
+  font-size: 14px !important;
+  .el-icon {
+    width: 100%;
+    height: 100%;
+    margin-right: 4px;
+  }
+  span {
+    margin-left: 0 !important;
+  }
+}
+
+.member-dialog {
+  border-radius: 8px !important;
+}
+
+// 负责人列表 - 展示
+.director-list {
+  max-width: 424px;
+  padding: 0 16px;
+}
+
+.member-input-item {
+  border: 1px solid #f2f3f5;
+  display: inline-flex;
+  background: #fff;
+  height: 26px;
+  padding: 0 8px 0 0;
+  vertical-align: bottom;
+  border-radius: 20px;
+  color: #1a1a1a;
+  .avatar {
+    background: #fff;
+    color: #fff;
+  }
+}
+
+.table-loading {
+  height: calc(100vh - 275px);
+}
+
+.ant-cascader-dropdown .ant-cascader-menu {
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: $tool-drop-scorll-radius;
+    background-color: $tool-drop-scorll-bg;
+  }
+}
+
+/* 去掉提示阴影 */
+.ant-tooltip {
+  display: none;
+}
+
+.ant-tooltip .ant-tooltip-inner {
+  box-shadow: none;
+}
+
+.skeleton-box {
+  width: 100%;
+  height: 24px;
+  position: relative;
+  padding: 0 12px;
+  p {
+    width: 100%;
+    height: 100%;
+    background-color: #f7f8fa;
+    border-radius: 4px;
+  }
+}
+
+.el-checkobx-label-color {
+  .el-checkbox {
+    .el-checkbox__label {
+      color: #999;
+    }
+  }
+}
+
+.ant-modal {
+  width: 100vw!important;
+  .ant-modal-content {
+    width: calc(100vw - 32px);
+    .ant-modal-confirm-body {
+      .anticon {
+        margin-inline-end: 12px;
+      }
+    }
+    .ant-modal-confirm-btns {
+      button {
+        min-width: 60px;
+        span {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+// Msgbox 消息弹出框
+.modal-warning-s,
+.modal-error-s,
+.modal-warning-l {
+  .ant-modal-content {
+    margin: 0 auto;
+    max-width: 480px;
+    max-height: 480px;
+    border-radius: 8px;
+    padding: 24px;
+    .ant-modal-confirm-title {
+      @extend .pfm;
+      @extend .font-smoothing;
+      transform: translateX(-8px);
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: normal;
+    }
+    .ant-modal-close-x {
+      width: 16px;
+      height: 16px;
+      line-height: 16px;
+    }
+    .ant-modal-close {
+      width: 16px;
+      height: 16px;
+      top: 26px;
+      right: 24px;
+    }
+    .ant-modal-confirm-content {
+      margin-block-start: 16px !important;
+      margin-inline-start: 0 !important;
+      width: 100%;
+      max-width: initial !important;
+
+      .content-wrap {
+        font-size: 14px;
+        line-height: 22px;
+        color: $color-icon;
+        margin-top: 8px;
+      }
+    }
+    .ant-modal-confirm-btns {
+      margin-top: 24px;
+      button {
+        outline: none;
+        height: 32px;
+        border-radius: 4px;
+        &:focus-visible {
+          outline: 2px solid #91caff;
+          outline-offset: 1px;
+          transition:
+            outline-offset 0s,
+            outline 0s;
+        }
+        &:first-child {
+          border: 1px solid $color-border-main;
+          color: #1a1a1a;
+          &:hover {
+            border-color: $color-primary;
+            color: $color-primary;
+          }
+        }
+        &:last-child {
+          margin-inline-start: 16px;
+          color: white;
+          &:hover {
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}
+
+.modal-warning-s,
+modal-warning-l {
+  .ant-modal-content {
+    .anticon {
+      color: $color-orange;
+    }
+    .ant-modal-confirm-btns {
+      button {
+        + button {
+          background-color: $color-primary;
+          border-color: $color-primary;
+          &:hover {
+            background-color: $color-primary;
+            border-color: $color-primary;
+          }
+        }
+      }
+    }
+  }
+}
+
+.modal-warning-l {
+  .ant-modal-content {
+    margin: 0 auto;
+  }
+}
+
+.modal-error-s {
+  .ant-modal-content {
+    .anticon {
+      color: $color-error;
+    }
+    .ant-modal-confirm-btns {
+      button {
+        &:last-child {
+          background-color: #fd4c4c;
+          border-color: #fd4c4c;
+          &:hover {
+            background-color: #fe8787;
+            border-color: #fe8787;
+          }
+        }
+      }
+    }
+  }
+}
+
+.editor-order-list {
+  ul li {
+    font-size: 14px;
+    min-height: 22px;
+    line-height: 1.9 !important;
+    margin-left: 1.71em;
+  }
+  ol li {
+    font-size: 14px;
+    min-height: 22px;
+    line-height: 1.9 !important;
+    margin-left: 1.71em;
+  }
+  ul li::marker {
+    color: #1d74f5; /* 修改标记的颜色 */
+  }
+  ol li::marker {
+    color: #1d74f5; /* 修改标记的颜色 */
+  }
+  ol ol li {
+    margin-left: 1.2em;
+  }
+  ul ul li {
+    margin-left: 1.2em;
+  }
+  a {
+    color: #1d74f5;
+    text-decoration: underline;
+  }
+  ol {
+    list-style: decimal;
+  }
+  ol ol {
+    list-style: lower-alpha;
+  }
+  ol ol ol {
+    list-style: lower-roman;
+  }
+  ol ol ol ol {
+    list-style: decimal;
+  }
+  ol ol ol ol ol {
+    list-style: lower-alpha;
+  }
+  ol ol ol ol ol ol {
+    list-style: lower-roman;
+  }
+  ol ol ol ol ol ol ol {
+    list-style: decimal;
+  }
+  ol ol ol ol ol ol ol ol {
+    list-style: lower-alpha;
+  }
+  ol ol ol ol ol ol ol ol ol {
+    list-style: lower-roman;
+  }
+  ol ol ol ol ol ol ol ol ol ol {
+    list-style: decimal;
+  }
+  ol ol ol ol ol ol ol ol ol ol ol {
+    list-style: lower-alpha;
+  }
+  ol ol ol ol ol ol ol ol ol ol ol ol {
+    list-style: lower-roman;
+  }
+  ul {
+    list-style: disc;
+  }
+  ul ul {
+    list-style: circle;
+  }
+  ul ul ul {
+    list-style: square;
+  }
+  ul ul ul ul {
+    list-style: disc;
+  }
+  ul ul ul ul ul {
+    list-style: circle;
+  }
+  ul ul ul ul ul ul {
+    list-style: square;
+  }
+  ul ul ul ul ul ul ul {
+    list-style: disc;
+  }
+  ul ul ul ul ul ul ul ul {
+    list-style: circle;
+  }
+  ul ul ul ul ul ul ul ul ul {
+    list-style: square;
+  }
+  ul ul ul ul ul ul ul ul ul ul {
+    list-style: disc;
+  }
+  ul ul ul ul ul ul ul ul ul ul ul {
+    list-style: circle;
+  }
+  ul ul ul ul ul ul ul ul ul ul ul ul {
+    list-style: square;
+  }
+}
+
+.text-ellipsis {
+  display: inline-block !important;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.lh1 {
+  line-height: 1;
+}
+
+// form 表单样式重置
+.ant-form-item-explain-error + .ant-form-item-explain-error {
+  display: none;
+}
+
+// Msgbox 消息弹出框
+.modal-warning-s,
+.modal-error-s {
+  .ant-modal-content {
+    margin: 0 auto;
+    max-width: 480px;
+    max-height: 480px;
+    border-radius: 8px;
+    padding: 24px;
+    .ant-modal-confirm-title {
+      @extend .pfm;
+      @extend .font-smoothing;
+      transform: translateX(-8px);
+      font-size: 16px;
+      line-height: 20px;
+    }
+    .ant-modal-close-x {
+      width: 16px;
+      height: 16px;
+      line-height: 16px;
+    }
+    .ant-modal-close {
+      width: 16px;
+      height: 16px;
+      top: 26px;
+      right: 24px;
+    }
+    .ant-modal-confirm-content {
+      margin-block-start: 16px !important;
+      margin-inline-start: 0 !important;
+      width: 100%;
+      max-width: initial !important;
+
+      .content-wrap {
+        font-size: 14px;
+        line-height: 22px;
+        color: $color-icon;
+        margin-top: 8px;
+      }
+    }
+    .ant-modal-confirm-btns {
+      margin-top: 24px;
+      button {
+        outline: none;
+        height: 32px;
+        border-radius: 4px;
+        &:first-child {
+          border: 1px solid #edeef0;
+          color: #1a1a1a;
+          &:hover {
+            border-color: $color-primary;
+            color: $color-primary;
+          }
+        }
+        &:last-child {
+          margin-inline-start: 16px;
+          color: white;
+          &:hover {
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}
+
+.modal-warning-s,
+.modal-warning-l {
+  .ant-modal-content {
+    .anticon {
+      color: $color-orange;
+    }
+    .ant-modal-confirm-btns {
+      button {
+        + button {
+          background-color: $color-primary;
+          border-color: $color-primary;
+          &:hover {
+            background-color: $color-primary;
+            border-color: $color-primary;
+          }
+        }
+      }
+    }
+  }
+}
+
+.modal-error-s {
+  .ant-modal-content {
+    .anticon {
+      color: $color-error;
+    }
+    .ant-modal-confirm-btns {
+      button {
+        &:last-child {
+          background-color: #fd4c4c;
+          border-color: #fd4c4c;
+          &:hover {
+            background-color: #fe8787;
+            border-color: #fe8787;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+.custom-y-scroll {
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    //整体样式
+    height: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    //滑动滑块条样式
+    border-radius: $tool-drop-scorll-radius;
+    background-color: $tool-drop-scorll-bg;
+  }
+}

@@ -1,0 +1,82 @@
+/*
+ * 以下内容与 tailwindcss 完全一致
+ * 参考: https://tailwindcss.com/docs/flex
+ */
+
+// Layout
+.flex {
+  display: flex;
+}
+
+// Layout - Flex
+.flex-1 {
+  flex: 1;
+}
+
+// Flexbox & Grid
+// Flexbox & Grid - Flex Direction
+.flex-col {
+  flex-direction: column;
+}
+
+// Flexbox & Grid - Align Items
+.justify-items-center {
+  justify-content: center;
+}
+
+// Flexbox & Grid - Align Items
+.items-center	{
+  align-items: center;
+}
+
+// Sizing 尺寸
+// Width 宽度
+.w-full {
+  width: 100%;
+}
+// Sizing - Height
+.h-full {
+  height: 100%;
+}
+
+// Typography 排版
+// Typography - Line Height
+.leading-none	 {
+  line-height: 1;
+}
+// Typography - Vertical Align
+.align-sub {
+  vertical-align: sub;
+}
+
+// Backgrounds
+// Background Color
+.bg-white {
+  background-color: white;
+}
+
+// Borders
+// Borders - Border Width
+.border-0	{
+  border-width: 0;
+}
+.border-b {
+  border-bottom-width: 1px;
+}
+// Borders - Border Style
+.border-solid	{
+  border-style: solid;
+}
+
+// Interactivity 交互
+// Interactivity Cursor
+.cursor-pointer	 {
+  cursor: pointer;
+}
+.cursor-move {
+  cursor: move;
+}
+
+.pointer-events-none {
+  pointer-events: none;
+}

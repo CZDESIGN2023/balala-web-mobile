@@ -1,0 +1,22 @@
+@font-face {
+  font-family: 'CustomFont-Regular';
+  src: local('HarmonyOS_SansSC_Regular'), url('HarmonyOS_SansSC_Regular.ttf');
+  font-weight: initial;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'CustomFont-Medium';
+  src: local('HarmonyOS_SansSC_Medium'), url('HarmonyOS_SansSC_Medium.ttf');
+  font-weight: initial;
+  font-style: normal;
+}
+
+@font-face {
+  /* 自定义的字体名车，调用该字体时使用 */
+  font-family: 'D-DIN-PRO-500-Medium';
+  /* 引用字体包 */
+  src: local('D-DIN-PRO-Medium'), url('D-DIN-PRO-500-Medium.otf');
+  font-weight: initial;
+  font-style: normal;
+}

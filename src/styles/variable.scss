@@ -1,0 +1,127 @@
+/** element style  */
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: (
+    'primary': (
+      'base': #1d74f5
+    ),
+    'success': (
+      'base': #08c479
+    ),
+    'warning': (
+      'base': #ffa723
+    ),
+    'danger': (
+      'base': #fd5454
+    ),
+    'error': (
+      'base': #e43535
+    )
+  ),
+  $text-color: (
+    'primary': #1a1a1a
+  ),
+  $scrollbar: (
+    'opacity': 1,
+    'bg-color': #e6e7eb,
+    'hover-opacity': 1,
+    'hover-bg-color': #e6e7eb
+  )
+);
+// @import url('./_toolbar.scss');
+/* global style */
+$color-primary: #1d74f5;
+$color-white: #ffffff;
+$color-sub: #e3f2ff;
+$color-warning: #ffa723;
+$color-input: #f7f8fa;
+$color-input-hover: #f1f4f7;
+$color-icon: #333333;
+$color-title: #1a1a1a;
+$color-main: #666666;
+$color-minor: #999999;
+$color-error: #fd4c4c;
+$color-orange: #ff9800;
+$color-border-main: #edeef0;
+$color-border-minor: #f2f3f5;
+$color-bg-hover: rgba(0, 0, 0, 0.04);
+$color-bg-active: rgba(0, 0, 0, 0.08);
+$color-primary-active: rgba(29, 116, 245, 0.08);
+$color-default-hover: rgba(24, 62, 118, 0.03);
+$color-default-active: rgba(24, 62, 118, 0.06);
+$color-default-bg: rgba(29, 116, 245, 0.08);
+$color-scrollbar-bg: rgba(24, 62, 118, 0.12);
+
+$color-text3: rgba(0, 0, 0, 0.8); // 接近 #333 颜色，常用于文本
+
+$input-search-focus-border-color: #1d74f5;
+// 工具栏输入框
+$tool-input-width: 192px;
+$tool-input-height: 36px;
+$tool-input-radius: 4px;
+$tool-input-normal-bg: #f7f8fa;
+$tool-input-hover-bg: #edeef0;
+$tool-input-focus-bg: #ffffff;
+$tool-input-tip-bg: #ffebee;
+$tool-input-close-bg: #666;
+
+// 关闭按钮
+$tool-close-icon-bg: rgba(0, 0, 0, 0.4);
+$tool-close-icon-hover: rgba(0, 0, 0, 0.6);
+// 选择器
+$tool-select-search-height: 298px;
+$tool-select-normal-height: 296px;
+
+// 通用样式
+$tool-filter-color: #1d74f5;
+$tool-hover-bg: rgba(24, 62, 118, 0.03);
+$tool-click-bg: rgba(24, 62, 118, 0.06);
+$tool-select-bg: rgba(29, 116, 245, 0.08);
+$tool-box-shadow:
+  0px 8px 24px 0px rgba(0, 0, 0, 0.06),
+  0px 4px 4px 0px rgba(0, 0, 0, 0.02);
+// 下拉框
+$tool-drop-height: 296px;
+$tool-drop-scorll-width: 6px;
+$tool-drop-scorll-height: 48px;
+$tool-drop-scorll-radius: 3px;
+$tool-drop-scorll-bg: rgba(24, 62, 118, 0.12);
+
+// 一二级阴影 搭配边框颜色
+$tool-drop-box-border: #f4f5f7;
+
+// 一级阴影
+$tool-drop-box-shadow:
+  0px 4px 24px 0px rgba(12, 20, 33, 0.01),
+  0px 4px 4px 0px rgba(12, 20, 33, 0.02);
+
+// 二级阴影
+$tool-drop-box-shadow2:
+  0px 0px 0px 0px rgba(12, 20, 33, 0.02),
+  0px 128px 80px 0px rgba(12, 20, 33, 0.02),
+  0px 72px 72px 0px rgba(12, 20, 33, 0.02),
+  0px 16px 40px 0px rgba(12, 20, 33, 0.02);
+
+// 登陆页
+$login-input-holder-color: #bfbfbf;
+$login-input-width: 326px;
+$login-input-height: 44px;
+$login-input-radius: 6px;
+$login-input-normal-bg: #f7f8fa;
+$login-input-hover-bg: #edeef0;
+$login-input-focus-bg: #fff;
+
+$login-btn-height: 44px;
+$login-btn-radius: 6px;
+$login-btn-bg: #1d74f5;
+
+// 侧边栏
+$sidebar-bg: #f7f9fc;
+$sidebar-width: 240px;
+$sidebar-width-is-collapse: 68px;
+
+
+
+
+$filter-drop-down-min-width: 120px;
+
+$filter-drop-font-size: 12px;
